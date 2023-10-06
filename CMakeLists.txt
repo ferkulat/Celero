@@ -100,6 +100,7 @@ option(CELERO_ENABLE_EXPERIMENTS "Set to ON to automatically build all examples.
 option(CELERO_ENABLE_FOLDERS "Enable to put Celero in its own solution folder under Visual Studio" ON)
 option(CELERO_ENABLE_TESTS "Enable building and running unit tests." OFF)
 option(CELERO_TREAT_WARNINGS_AS_ERRORS "Treat compile warnings as errors." ON)
+option(CELERO_SET_LIBRARY_POSTFIX "Set OFF to prevent celero setting cache variables for CMAKE_<BUILDTYPE>_POSTFIX." ON)
 
 if(CELERO_COMPILE_DYNAMIC_LIBRARIES)
 	SET(CELERO_USER_DEFINED_SHARED_OR_STATIC "SHARED")
@@ -120,11 +121,12 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_DEBUG_POSTFIX          "-d" CACHE STRING "add a postfix, usually d on windows")
-set(CMAKE_RELEASE_POSTFIX        "" CACHE STRING "add a postfix, usually empty on windows")
-set(CMAKE_RELWITHDEBINFO_POSTFIX "-rd" CACHE STRING "add a postfix, usually empty on windows")
-set(CMAKE_MINSIZEREL_POSTFIX     "" CACHE STRING "add a postfix, usually empty on windows")
-
+if(CELERO_SET_LIBRARY_POSTFIX)
+	set(CMAKE_DEBUG_POSTFIX          "-d"  CACHE STRING "add a postfix, usually d on windows")
+	set(CMAKE_RELEASE_POSTFIX        ""    CACHE STRING "add a postfix, usually empty on windows")
+	set(CMAKE_RELWITHDEBINFO_POSTFIX "-rd" CACHE STRING "add a postfix, usually empty on windows")
+	set(CMAKE_MINSIZEREL_POSTFIX     ""    CACHE STRING "add a postfix, usually empty on windows")
+endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # ---------------------------------------------------------------------------
